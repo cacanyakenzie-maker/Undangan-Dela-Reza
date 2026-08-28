@@ -11,4 +11,54 @@
 <section><div class="eyebrow">Our Moments</div><h2 class="section-title">Galeri Kami</h2><div class="gallery"><img src="assets/foto-3.png"><img src="assets/foto-2.jpg"><img src="assets/foto-1.png"><img src="assets/foto-4.png"></div></section></main>
 <footer><div class="eyebrow">Terima kasih atas doa dan kehadiran Anda</div><div class="script">Dela & Reza</div><div>23 & 24 Oktober 2026</div></footer>
 <script>const target=new Date('2026-10-23T09:00:00+07:00').getTime();function u(){let x=Math.max(0,target-Date.now()),d=Math.floor(x/864e5),h=Math.floor(x%864e5/36e5),m=Math.floor(x%36e5/6e4),s=Math.floor(x%6e4/1e3);document.getElementById('countdown').innerHTML=`<div class="time"><b>${d}</b>Hari</div><div class="time"><b>${h}</b>Jam</div><div class="time"><b>${m}</b>Menit</div><div class="time"><b>${s}</b>Detik</div>`}u();setInterval(u,1000)</script>
+
+<!-- Musik Undangan Dela & Reza -->
+<audio id="weddingMusic" src="lagu-undangan.mpeg" loop preload="auto"></audio>
+<button id="musicToggle" type="button" aria-label="Putar atau jeda musik"
+        style="position:fixed;right:18px;bottom:18px;z-index:9999;border:0;border-radius:50%;
+               width:52px;height:52px;font-size:22px;background:rgba(255,255,255,.9);
+               box-shadow:0 3px 12px rgba(0,0,0,.2);cursor:pointer;">🎵</button>
+<script>
+(function () {
+  const audio = document.getElementById('weddingMusic');
+  const toggle = document.getElementById('musicToggle');
+
+  function startMusic() {
+    if (!audio) return;
+    audio.play().then(() => {
+      toggle.textContent = '🔊';
+    }).catch(() => {});
+  }
+
+  function pauseMusic() {
+    audio.pause();
+    toggle.textContent = '🎵';
+  }
+
+  toggle.addEventListener('click', function () {
+    if (audio.paused) startMusic();
+    else pauseMusic();
+  });
+
+  // Browser mobile rules generally require a user gesture.
+  // Try to start after the invitation's opening button is clicked.
+  const selectors = [
+    '#openInvitation', '#open-invitation', '.open-invitation',
+    '.btn-open', '.open-btn', '[id*="open"]', '[class*="open"]'
+  ];
+  let wired = false;
+  for (const selector of selectors) {
+    document.querySelectorAll(selector).forEach(btn => {
+      btn.addEventListener('click', startMusic, {once:false});
+      wired = true;
+    });
+  }
+
+  // Fallback: first user interaction anywhere starts the music.
+  if (!wired) {
+    document.addEventListener('click', startMusic, {once:true});
+  }
+})();
+</script>
+
 </body></html>
